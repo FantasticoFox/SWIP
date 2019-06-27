@@ -1,8 +1,8 @@
 # Adaptive nodes capabilities protocol (SWIP PIONEER CANDIDATE)
 
-## SERIAL
+## SWIP SERIAL
 
-1
+Unassigned
 
 ## STATUS
 
@@ -34,10 +34,10 @@ For the individually capability flags we will initially be choosing from, we can
 ```
 BZZ/SYNC: 			// (registered by default)
 - retrieve		0x00020001
-- push			0x00010002
-- retrieve relay	0x00010010
-- push sync relay	0x00010020
-- storer node		0x00018000	// the node participates as storer for area of responsibility
+- push			0x00020002
+- retrieve relay	0x00020010
+- push sync relay	0x00020020
+- storer node		0x00028000	// the node participates as storer for area of responsibility
 
 PSS:
 - receive	0x010101
