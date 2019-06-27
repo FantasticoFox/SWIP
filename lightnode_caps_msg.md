@@ -2,7 +2,7 @@
 
 ## SWIP SERIAL
 
-Unassigned
+1
 
 ## STATUS
 
