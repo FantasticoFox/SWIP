@@ -53,6 +53,8 @@ Capabilities {
 }
 ```
 
+This protocol message can be sent at any time to inform peers of _changes_ to the node's capabilities. 
+
 Furthermore, the bzz handshake message itself should embed this message instead of the `Light` field that is currently there. The `HandshakeMsg` message this becomes:
 
 ```
