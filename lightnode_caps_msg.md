@@ -1,8 +1,12 @@
-# Adaptive nodes capability protocol
+# Adaptive nodes capabilities protocol (SWIP PIONEER CANDIDATE)
+
+## SWIP SERIAL
+
+Unassigned
 
 ## STATUS
 
-DRAFT
+Review
 
 ## PROBLEM
 
@@ -18,33 +22,38 @@ Capabilities are combinational. Some combination may make more sense than other.
 
 For this reason, a bit vector seems the most logical choice. The bit vector can represent the adaptive node operation state within the node, and be embedded into the protocol message as-is.
 
-Since the capabilities may have to be set from different system modules, the network module should provide an API for registering them. We can use byte pairs for this purpose; the first byte being the identifier of the module, the second being the actual bit flags definiing the settings
+Since the capabilities may have to be set from different system modules, the network module should provide an API for registering them. The following structure is proposed:
+
+* the first byte is the identifier of the module (0x00 is bzz, and built in)
+* the second byte is the length `n` of the bit vector containing the flags
+* the last `n` bytes is the bit vector containing the flags
+
 
 For the individually capability flags we will initially be choosing from, we can see an example of two distinct byte pairs representing tematic categories:
 
 ```
 BZZ/SYNC: 			// (registered by default)
-- retrieve		0x0001
-- push			0x0002
-- retrieve relay	0x0010
-- push sync relay	0x0020
-- storer node		0x0080	// the node participates as storer for area of responsibility
+- retrieve		0x00020001
+- push			0x00020002
+- retrieve relay	0x00020010
+- push sync relay	0x00020020
+- storer node		0x00028000	// the node participates as storer for area of responsibility
 
 PSS:
-- receive	0x0101
-- send		0x0102
-- relay		0x0l10
+- receive	0x010101
+- send		0x010102
+- relay		0x0l0110
 ```
 
-We define a new protocol message for the `bzz` protocol called `Capabilities`. This message contains one field holding all module capability byte pairs.
+We define a new protocol message for the `bzz` protocol called `Capabilities`. This message contains one field holding all module capability bit vectors.
 
 ```
 Capabilities {
-	Module [][2]byte
+	Module [][]byte
 }
 ```
 
-EDIT: This protocol message can be sent at any time to inform peers of _changes_ to the node's capabilities. 
+This protocol message can be sent at any time to inform peers of _changes_ to the node's capabilities. 
 
 Furthermore, the bzz handshake message itself should also embed this message instead of the `Light` field that is currently there. The `HandshakeMsg` message this becomes:
 
@@ -78,4 +87,3 @@ Louis Holbrook - @nolash
 ## COPYRIGHT WAIVER
 
 Copyright and related rights waived via [CC0](https://creativecommons.org/publicdomain/zero/1.0/)
-
